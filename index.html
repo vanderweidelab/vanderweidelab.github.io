@@ -16,15 +16,10 @@
     <!-- Include style sheets -->
     <link rel="stylesheet" href="main.css" />
 
-    <!-- Fonts from Google Fonts -->
+    <!-- Fonts from Google Fonts: only load the family/weights we use -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;600;700&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
-
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter">
-	
-	
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;600;700&display=swap" rel="stylesheet" />
 
     <!-- Load FontAwesome (for icons) -->
     <link
@@ -56,7 +51,7 @@
       .foldout-label:hover {
         background-color: #e8e8e8;
       }
-  .foldout-label .arrow {
+      .foldout-label .arrow {
         display: inline-block;
         margin-left: 8px;
         transition: transform 0.3s ease;
@@ -92,11 +87,11 @@
       We are a research lab in the <a href="https://www.cmmutrecht.eu" title="Center for Molecular Medicine">Center for Molecular Medicine</a>, UMC Utrecht, NL.
       </p>
       <p>
-	  Our lab investigates the regulatory logic of the genome. We believe that tackling disease requires <b>connecting the dots</b> across multiple regulatory layers within the same cell.
-	  </p>
+      Our lab investigates the regulatory logic of the genome. We believe that tackling disease requires <strong>connecting the dots</strong> across multiple regulatory layers within the same cell.
+      </p>
       <p>
 	  We use and develop <b>single-cell multimodal methods</b> to measure these layers simultaneously (e.g., histone modifications, transcription factor binding) within individual cells. Through <b>computational approaches</b>, we connect chromatin changes to transcription to understand how cells function.
-	  </p>
+      </p>
 
       <!-- News Section -->
       <div class="foldout-label" onclick="toggleFoldout()">
@@ -104,10 +99,9 @@
       </div>
       <div class="foldout-content" id="foldoutContent">
         <ul style="list-style: none;">
-		<li>01/01/2026: <b>Start of the lab at CMM.</b><br><i>Robin has been appointed as an Assistant Professor at the University Medical Center Utrecht.</i></li>
-       <li>29/12/2025: <b>Marta's scHPTM-imputation benchmarking paper is published!</b><br>
+          <li>01/01/2026: <strong>Start of the lab at CMM.</strong><br><i>Robin has been appointed as an Assistant Professor at the University Medical Center Utrecht.</i></li>
+          <li>29/12/2025: <strong>Marta's scHPTM-imputation benchmarking paper is published!</strong><br>
  Marta Moreno-González, Jeroen de Ridder, Jop Kind, <ins>Robin H van der Weide</ins>, <i>A computational framework to dissect imputation strategies for single-cell histone modification data</i>, NAR Genomics and Bioinformatics</li>
-
         </ul>
       </div>
 
@@ -138,8 +132,114 @@
         arrow.classList.toggle("rotated");
       }
       </script>
+      
+      <script>
+      // toggleFoldout remains global to support the inline onclick attribute
+      function toggleFoldout() {
+        var foldoutContent = document.getElementById("foldoutContent");
+        var arrow = document.getElementById("arrow");
+        foldoutContent.classList.toggle("active");
+        arrow.classList.toggle("rotated");
+
+        // Ask the page-level updater to re-evaluate avatar visibility if present
+        if (typeof window.updateAvatarVisibility === 'function') {
+          window.updateAvatarVisibility();
+        }
+      }
+
+      // Expand / collapse the truncated inline paragraph
+      (function () {
+        var btn = document.getElementById('expandBtn');
+        var full = document.getElementById('fullText');
+        if (!btn || !full) return;
+
+        function toggle(e) {
+          e && e.preventDefault();
+          var expanded = btn.getAttribute('aria-expanded') === 'true';
+          if (expanded) {
+            full.setAttribute('hidden', '');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.textContent = 'more';
+          } else {
+            full.removeAttribute('hidden');
+            btn.setAttribute('aria-expanded', 'true');
+            btn.textContent = 'less';
+          }
+          // If the avatar visibility function exists, re-evaluate (so avatar hides when user opens long text)
+          if (typeof window.updateAvatarVisibility === 'function') {
+            window.updateAvatarVisibility();
+          }
+        }
+
+        btn.addEventListener('click', toggle);
+      })();
+      </script>
+      
+
+      <!-- Font debug: logs loaded fonts and checks for 400/700 availability -->
+      <script>
+      document.fonts.ready.then(() => {
+        try {
+          console.group('vanderweidelab: fonts');
+          for (const f of document.fonts) {
+            console.log({ family: f.family, style: f.style, weight: f.weight || f.weightRange || '(range)', status: f.status });
+          }
+          console.log('Source Sans Pro 400 available?', document.fonts.check('1em 400 "Source Sans Pro"'));
+          console.log('Source Sans Pro 700 available?', document.fonts.check('1em 700 "Source Sans Pro"'));
+          console.groupEnd();
+        } catch (e) {
+          console.error('Font debug error', e);
+        }
+      });
+      </script>
+      
+       <script>
+      // Avatar visibility: hide the avatar when the viewer scrolls down (threshold) or when news section is open.
+      (function () {
+        var avatar = document.querySelector('.avatar');
+        var foldoutContent = document.getElementById('foldoutContent');
+        if (!avatar) return;
+
+        var SCROLL_THRESHOLD = 10; // px scrolled before hiding avatar
+        var ticking = false;
+
+        // Expose updater globally so other scripts (toggleFoldout, expand) can call it
+        window.updateAvatarVisibility = function () {
+          var scrolled = window.scrollY > SCROLL_THRESHOLD;
+          //var foldoutOpen = foldoutContent && foldoutContent.classList.contains('active');
+          if (scrolled ){// || foldoutOpen) {
+            avatar.classList.add('avatar-hidden');
+          } else {
+            avatar.classList.remove('avatar-hidden');
+          }
+        };
+
+        // Initial evaluation
+        window.updateAvatarVisibility();
+
+        // Efficient scroll handler using rAF
+        window.addEventListener('scroll', function () {
+          if (!ticking) {
+            window.requestAnimationFrame(function () {
+              window.updateAvatarVisibility();
+              ticking = false;
+            });
+            ticking = true;
+          }
+        }, { passive: true });
+
+        // Also observe foldout mutations in case it's toggled by other code
+        if (foldoutContent && window.MutationObserver) {
+          var mo = new MutationObserver(function () {
+            window.updateAvatarVisibility();
+          });
+          mo.observe(foldoutContent, { attributes: true, attributeFilter: ['class'] });
+        }
+      })();
+      </script>
 
     </section>
   </body>
  
 </html>
+
