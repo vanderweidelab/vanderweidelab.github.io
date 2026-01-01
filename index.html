@@ -37,6 +37,44 @@
       integrity="sha512-KlJCpRsLf+KKu2VQa5vmRuClRFjxc5lXO03ixZt82HZUk41+1I0bD8KBSA0fY290ayMfWYI9udIqeOWSu1/uZg=="
       crossorigin="anonymous"
     />
+
+    <style>
+      .foldout-label {
+        cursor: pointer;
+        padding: 10px 15px;
+        background-color: #f5f5f5;
+        border: 0px solid #ddd;
+        border-radius: 5px;
+        text-align: center;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        margin: 20px 0 10px 0;
+        user-select: none;
+      }
+      .foldout-label:hover {
+        background-color: #e8e8e8;
+      }
+      .foldout-label .arrow {
+        display: inline-block;
+        margin-left: 8px;
+        transition: transform 0.3s ease;
+      }
+      .foldout-label .arrow.rotated {
+        transform: rotate(180deg);
+      }
+      .foldout-content {
+        display: none;
+        padding: 0px;
+        border: 0px solid #ccc;
+        background-color: #fff;
+        text-align: left;
+        text-indent:-1.5em;
+        list-style-type: none;
+      }
+      .foldout-content.active {
+        display: block;
+      }
+    </style>
   </head>
 
   <body>
@@ -48,7 +86,7 @@
       <h1>van der Weide lab</h1>
       <h3>Chromatin Systems Biology</h3>
       <p>
-      We are a research lab in the <a href="https://www.cmmutrecht.eu" title="Center for Molecular Medicine"></a>, UMC Utrecht.
+      We are a research lab in the <a href="https://www.cmmutrecht.eu" title="Center for Molecular Medicine">Center for Molecular Medicine</a>, UMC Utrecht.
       </p>
       <p>
 	  Our lab investigates the fundamental regulatory logic of the genome. We believe that understanding cellular health and disease requires connecting the dots across multiple scales: from the physical structure and modifications of chromatin to gene expression.
@@ -56,6 +94,19 @@
       <p>
         Please feel free to get in touch!
       </p>
+
+      <!-- News Section -->
+      <div class="foldout-label" onclick="toggleFoldout()">
+        News <span class="arrow" id="arrow">▼</span>
+      </div>
+      <div class="foldout-content" id="foldoutContent">
+        <ul style="list-style: none;">
+          <li>08/2023: <b>Won the Veni fellowship</b><br><i>The difference is night and day: DNA repositioning in the nocturnal retina</i></li>
+          <li>10/2022: <b>Collaboration-paper out in NSMB</b><br><i>Distinct roles for CKM–Mediator in controlling Polycomb-dependent chromosomal interactions and priming genes for induction</i></li>
+          <li>03/2022: <b>Obtained my PhD</b><br><i>3D Genomics: form and function of chromatin</i></li>
+          <li>02/2022: <b>Paper out in NatComms</b><br><i>A Mediator-cohesin axis controls heterochromatin domain formation</i></li>
+        </ul>
+      </div>
 
       <!-- Icons -->
       <ul class="icons">
@@ -69,59 +120,21 @@
           <a href="https://www.linkedin.com/in/robinvanderweide/" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
         </li>
         <li>
-          <a href="http://orcid.org/0000-0002-6466-7280" title=ORCiD><i class="ai ai-orcid"></i></a>
+          <a href="http://orcid.org/0000-0002-6466-7280" title="ORCiD"><i class="ai ai-orcid"></i></a>
         </li>
         <li>
           <a href="https://scholar.google.nl/citations?user=nE3V9gEAAAAJ&hl=en" title="Google Scholar"><i class="ai ai-google-scholar"></i></a>
         </li>
       </ul>
-      <!-- 
 
-      Timeline<style>
-  .foldout {
-    display: none;
-  }
-  .foldout-label {
-    cursor: pointer;
-    padding: 1px;
-    background-color: #fff;
-    border: 0px solid #ccc;
-    text-align: center;
-  }
-  .foldout-content {
-    display: none;
-    padding: 0px;
-    border: 0px solid #ccc;
-    background-color: #fff;
-    text-align: left;
-    text-indent:-1.5em;
-    list-style-type: none;
-  }
-  .foldout-content.active {
-    display: block;
-  }
-</style>
-</head>
-<body>
-
-<div class="foldout-label" onclick="toggleFoldout()">News</div>
-<div class="foldout-content" id="foldoutContent">
-  <ul style="list-style: none;">
-    <li>08/2023: <b>Won the Veni fellowship</b><br><i>The difference is night and day: DNA repositioning in the nocturnal retina</i></li>
-    <li>10/2022: <b>Collaboration-paper out in NSMB</b><br><i>Distinct roles for CKM–Mediator in controlling Polycomb-dependent chromosomal interactions and priming genes for induction</i></li>
-    <li>03/2022: <b>Obtained my PhD</b><br><i>3D Genomics: form and function of chromatin</i></li>
-    <li>02/2022: <b>Paper out in NatComms</b><br><i>A Mediator-cohesin axis controls heterochromatin domain formation</i></li>
-  </ul>
-</div>
-
-<script>
-function toggleFoldout() {
-  var foldoutContent = document.getElementById("foldoutContent");
-  foldoutContent.classList.toggle("active");
-}
-</script>
-
- -->
+      <script>
+      function toggleFoldout() {
+        var foldoutContent = document.getElementById("foldoutContent");
+        var arrow = document.getElementById("arrow");
+        foldoutContent.classList.toggle("active");
+        arrow.classList.toggle("rotated");
+      }
+      </script>
 
     </section>
   </body>
