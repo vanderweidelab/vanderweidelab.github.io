@@ -20,7 +20,7 @@ h4 {
   display: block;
   margin: 0;
   font-weight: 600;
-  color: #585F64;
+  color: #1961ab;
 }
 
 /* Ensure semantic boldness maps to the strong/b tags we use */
@@ -31,11 +31,11 @@ strong, b {
 /* Links */
 a {
     text-decoration: none;
-    color: #80CDE7;
+    color: #1961ab;
 }
 
 a:hover {
-    color: #80CDE7;
+    color: #1961ab;
 }
 
 #content {
@@ -83,11 +83,11 @@ a:hover {
 }
 
 .icons a {
-    color: #CED6DB;
+    color: #e6e4e0; 
 }
 
 .icons a:hover {
-    color: #585F64;
+    color: #1961ab;
 }
 
 /* Styling for inline expand/collapse (kept small) */
@@ -101,7 +101,7 @@ a:hover {
 .expand-toggle {
   background: none;
   border: none;
-  color: #80CDE7;
+  color: #1961ab;
   cursor: pointer;
   padding: 0;
   margin-left: 0.25em;
@@ -111,6 +111,6 @@ a:hover {
   text-decoration: underline;
 }
 .expand-toggle:focus {
-  outline: 2px solid #80CDE7;
+  outline: 2px solid #1961ab;
   outline-offset: 2px;
 }
