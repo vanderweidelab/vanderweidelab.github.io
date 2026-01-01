@@ -23,6 +23,13 @@ h4 {
   color: #1961ab;
 }
 
+h5 {
+  display: block;
+  margin: 0;
+  font-weight: 500;
+  color: #1961ab;
+}
+
 /* Ensure semantic boldness maps to the strong/b tags we use */
 strong, b {
     font-weight: 700;
